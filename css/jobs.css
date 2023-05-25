@@ -55,6 +55,8 @@ nav a:hover {
 .container {
 	text-align: center;
 	margin: 0 auto;
+    height: 100%;
+    min-height: 100%;
 }
 
 .title {
@@ -106,7 +108,7 @@ nav a:hover {
 
 .accordion-content {
 	display: none;
-	padding: 10px 18px;
+	padding: 1.11% 2%;
 }
 
 .accordion.active .accordion-content {
@@ -145,7 +147,7 @@ footer {
 }
 
 .contact-info img {
-    width: 27.5%;
+    width: 26%;
     height: auto;
     margin-right: 1%;
     margin-left: 10%;
@@ -153,5 +155,5 @@ footer {
 h4 {
     font-family: Comic Sans MS, Comic Sans, cursive;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
