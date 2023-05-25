@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #E56523;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #98C110;
+}
+
+.logo img {
+  height: 75px;
+}
+
+nav ul {
+  display: flex;
+  margin: 0;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 24px;
+  padding: 20px;
+}
+
+nav li {
+  margin-right: 70px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+nav a:hover {
+  color: #98C110;
+}
+
+.location img {
+  height: 45px;
+  margin-left: 0;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* стили для заголовка */
+h1 {
+  text-align: center;
+  color: #98C110;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 50px;
+  margin-top: 20px;
+}
+
+/* стили для даты */
+.date {
+  font-size: 16px;
+  color: grey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
+/* стили для названия акции */
+.promo-name {
+  color: black;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
+/* стили для рамки */
+.description {
+  padding: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
+.description:before,
+.description:after {
+  content: '';
+  border-left: 1px solid grey;
+  margin-right: 5%;
+  height: calc(100% - 20px);
+}
+
+.promo-description {
+  display: flex;
+  max-height: 200px;
+  flex-direction: column;
+  flex-grow: 1;
+  border: 1px solid grey;
+  padding: 10px;
+  margin-left: -4%;
+  margin-right: 68%;
+  overflow: auto;
+
+}
+
+.poster-1{
+  max-width: 45%;
+  max-height: 45%;
+  display: flex;
+  border-radius: 10px;
+  margin: -18% auto 0 30%;
+}
+
+.poster-2{
+  max-width: 45%;
+  max-height: 45%;
+  display: flex;
+  border-radius: 10px;
+  margin: -9% auto 0 30%;
+
+}
+
+
+footer {
+  background-color: #98C110;
+  color: #fff;
+  padding: 2% 0;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
+.footer-container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 200px);
+}
+
+.contact-info h5 {
+  text-align: center;
+}
+
+.contact-info img {
+  width: 27.5%;
+  height: auto;
+  margin-right: 1%;
+  margin-left: 10%;
+}
+h4 {
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  text-align: center;
+  margin-bottom: 20px;
+}
