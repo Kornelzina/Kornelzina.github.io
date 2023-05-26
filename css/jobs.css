@@ -1,6 +1,6 @@
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 body {
     background-image: url("../images/fon.png");
@@ -8,111 +8,111 @@ body {
     background-size: cover;
 }
 header {
-  background-color: #E56523;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #98C110;
+    background-color: #E56523;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #98C110;
 }
 
 .logo img {
-  height: 75px;
+    height: 75px;
 }
 
 nav ul {
-  display: flex;
-  margin: 0;
-  font-family: Comic Sans MS, Comic Sans, cursive;
-  font-size: 24px;
-  padding: 20px;
+    display: flex;
+    margin: 0;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    font-size: 24px;
+    padding: 20px;
 }
 
 nav li {
-  margin-right: 70px;
+    margin-right: 70px;
 }
 
 nav a {
-  text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
 }
 
 nav a:hover {
-  color: #98C110;
+    color: #98C110;
 }
 
 .location img {
-  height: 45px;
-  margin-left: 0;
+    height: 45px;
+    margin-left: 0;
 }
 
 
 .main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .container {
-	text-align: center;
-	margin: 0 auto;
+    text-align: center;
+    margin: 0 auto;
     height: 100%;
     min-height: 100%;
 }
 
 .title {
-	margin-bottom: 20px;
-	font-family: Comic Sans MS, Comic Sans, cursive;
-	color: white;
+    margin-bottom: 20px;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    color: white;
 }
 .accordion-wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: stretch;
-	margin: 0 auto;
-	max-width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 auto;
+    max-width: 900px;
 }
 
 .accordion {
-	border: 1px solid #ccc;
-	margin-right: 10px;
-	margin-bottom: 10px;
-	background-color: #f5f5f5;
-	width: 400px;
-	font-family: Comic Sans MS, Comic Sans, cursive;
-	border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+    width: 400px;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    border-radius: 3px;
 }
 
 .accordion:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
 
 .accordion-button {
     font-family: Comic Sans MS, Comic Sans, cursive;
-	background-color: #fff;
-	color: #333;
-	cursor: pointer;
-	padding: 18px;
-	width: 100%;
-	border: none;
-	text-align: left;
-	outline: none;
-	font-size: 16px;
-	transition: background-color 0.3s ease;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .accordion-button:hover {
-	background-color: #ddd;
+    background-color: #ddd;
     border: 2px solid #aaa;
 }
 
 .accordion-content {
-	display: none;
-	padding: 1.11% 2%;
+    display: none;
+    padding: 1.11% 2%;
 }
 
 .accordion.active .accordion-content {
-	display: block;
+    display: block;
 }
 
 footer {
