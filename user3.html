@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+</head>
+<body>
+<div class="kod">>
+<p>using System;
+    <br>
+using System.Threading.Tasks;
+    <br>
+using System.Configuration;
+    <br>
+using System.Data.SqlClient;
+    <br>
+using System.Data;
+    <br>
+using System.Collections.Generic;
+    <br>
+
+//DateTime.Now.ToString("h:mm:ss tt")
+    <br>
+    <br>
+/*<br>
+Resources<br>
+    <br>
+1<br>
+    <br>
+You can add a Resources.resx file to your project and add resources like images, strings, files to it. Then you can reference these resources through an automatically-generated Resources class. By default, Visual Studio will create a Resources.resx file in the Properties directory. Any resources you add to the resources file will be added to the Resources directory by default.
+    <br>
+this.BackgroundImage = Properties.Resources.MyImage;<br>
+    <br>
+2<br>
+    <br>
+Below is the Code to Fetch Image From Resources Folder. Normally we keep images in Resources Folder. but Sometime we have image name only with us. in that case you can Access images from Resources Folder using Image Name only.
+    <br>
+Below Code will Demonstrate about it.<br>
+
+private System.Resources.ResourceManager RM = new System.Resources.ResourceManager("YourApplicationNameSpace.Properties.Resources", typeof(Resources).Assembly);
+    <br>
+PictureBox1.Image = (Image)RM.GetObject(YourPictureName);
+    <br>
+YourAppliacationNameSpace means name of your Application.<br>
+YourPictureName means the Picture you Want to access from Resources Folder. but Picture name must be without Extension e.g. (PNG, GIF, JPEG etc)
+    <br>
+    <br>
+Program<br>
+public static SqlService sqlService = new SqlService();
+    <br>
+form<br>
+if (user.type == Tables.participant)<br>
+{<br>
+new Form().Show();<br>
+}<br>
+    <br>
+User user = Program.sqlService.checkUserAndGetUser(<br>
+IdFromTextBox: idTextBox.Text,<br>
+passwordFromTextBox: passwordTextBox.Text<br>
+);<br>
+if ( user != null )<br>
+{<br>
+navigateToForm(user);<br>
+}<br>
+if (user == null)<br>
+{<br>
+MessageBox.Show("Неправильный логин или пароль");<br>
+}<br>
+    <br>
+*/<br>
+    <br>
+namespace KonfBezMeet<br>
+{<br>
+public enum Tables<br>
+{<br>
+manager,<br>
+participant,<br>
+moderator,<br>
+judge,<br>
+}<br>
+    <br>
+public abstract class User<br>
+{<br>
+public abstract string tableName {get;}<br>
+public abstract Tables type {get;}<br>
+public int id;<br>
+public string name;<br>
+public bool? isGenderFemale;<br>
+    <br>
+public void setDefParams(int id, string name, bool isGenderFemale)<br>
+{<br>
+this.id = id;<br>
+this.name = name;<br>
+this.isGenderFemale = isGenderFemale;<br>
+}<br>
+}<br>
+    <br>
+public class Participant : User<br>
+{<br>
+public override string tableName {<br>
+get => "Participant";<br>
+}<br>
+public override Tables type<br>
+{<br>
+get => Tables.participant;<br>
+}<br>
+}<br>
+    <br>
+public class Manager : User<br>
+{<br>
+public override string tableName<br>
+{<br>
+get => "Organizer";<br>
+}<br>
+public override Tables type<br>
+{<br>
+get => Tables.manager;<br>
+}<br>
+}<br>
+    <br>
+public class Judge : User<br>
+{<br>
+public override string tableName<br>
+{<br>
+get => "Jury";<br>
+}<br>
+public override Tables type<br>
+{<br>
+get => Tables.judge;<br>
+}<br>
+}<br>
+    <br>
+public class Moderator : User<br>
+{<br>
+public override string tableName<br>
+{<br>
+get => "Moderator";<br>
+}<br>
+public override Tables type<br>
+{<br>
+get => Tables.moderator;<br>
+}<br>
+}<br>
+
+// Класс<br>
+public class SqlService<br>
+{<br>
+private string connectionString = "Data Source=DESKTOP-81FB46K;Initial Catalog=KonfBezMeet;Integrated Security=True";<br>
+private SqlConnection connection;<br>
+    <br>
+    <br>
+User[] usersList = {<br>
+new Participant(),<br>
+new Judge(),<br>
+new Moderator(),<br>
+new Manager(),<br>
+};<br>
+    <br>
+Exception TooManyUsers = new Exception("Invalid database data -> multiple users with same name");<br>
+Exception tooManyLogins = new Exception("Invalid database logins -> multiple logins with same password");<br>
+    <br>
+// Внешние методы<br>
+public SqlService()<br>
+{<br>
+try<br>
+{<br>
+connection = new SqlConnection(connectionString);<br>
+Console.WriteLine("Connected");<br>
+}<br>
+catch (SqlException exeption)<br>
+{<br>
+throw exeption;<br>
+}<br>
+}<br>
+    <br>
+public void closeConnection()<br>
+{<br>
+if (connection.State == ConnectionState.Open)<br>
+{<br>
+connection.Close();<br>
+Console.WriteLine("Connection closed");<br>
+}<br>
+else<br>
+{<br>
+Console.WriteLine("Connection is already closed");<br>
+}<br>
+}<br>
+    <br>
+public User checkUserAndGetUser(string IdFromTextBox, string passwordFromTextBox)<br>
+{<br>
+return checkEveryTableLoginsAndGetUser(IdFromTextBox, passwordFromTextBox);<br>
+}<br>
+    <br>
+//Парсинг<br>
+private User checkEveryTableLoginsAndGetUser(<br>
+string IdFromTextBox,<br>
+string passwordFromTextBox<br>
+)<br>
+{<br>
+User userMatch = null;<br>
+foreach (User user in usersList)<br>
+{<br>
+object[] entity = loginCheckSqlQueryAndParseToArray(<br>
+IdFromTextBox: IdFromTextBox,<br>
+passwordFromTextBox: passwordFromTextBox,<br>
+tableName: user.tableName);<br>
+if (entity != null)<br>
+{<br>
+if (userMatch != null)<br>
+{<br>
+throw tooManyLogins;<br>
+}<br>
+fillUser(user, entity);<br>
+userMatch = user;<br>
+}<br>
+}<br>
+if (userMatch != null)<br>
+{<br>
+return userMatch;<br>
+}<br>
+else<br>
+{<br>
+return null;<br>
+}<br>
+}<br>
+    <br>
+private object[] loginCheckSqlQueryAndParseToArray(<br>
+string IdFromTextBox,<br>
+string passwordFromTextBox,<br>
+string tableName,<br>
+string selection = "*",<br>
+string tableIdColumn = "id",<br>
+string tablePasswordColumn = "pass"<br>
+)<br>
+{<br>
+string query = $"SELECT {selection} FROM {tableName} WHERE {tableIdColumn} = '{IdFromTextBox}' AND {tablePasswordColumn} = '{passwordFromTextBox}'";
+    <br>
+DataTable dtable = fillDtable(query);<br>
+    <br>
+if (dtable.Rows.Count == 1)<br>
+{<br>
+return dtable.Rows[0].ItemArray;<br>
+}<br>
+else if (dtable.Rows.Count > 1)<br>
+{<br>
+throw TooManyUsers;<br>
+}<br>
+else<br>
+{<br>
+return null;<br>
+}<br>
+}<br>
+    <br>
+//Пользователь<br>
+private void fillUser(User user, object[] entity)<br>
+{<br>
+user.id = Convert.ToInt32(entity[0]);<br>
+user.name = entity[2].ToString();<br>
+user.isGenderFemale = genderToBool(entity[3].ToString());<br>
+}<br>
+    <br>
+private bool? genderToBool(string gender)<br>
+{<br>
+if (gender == "м")<br>
+{<br>
+return false;<br>
+}<br>
+else if (gender == "ж")<br>
+{<br>
+return true;<br>
+}<br>
+else<br>
+{<br>
+Console.WriteLine("Error -> invalid gender");<br>
+return null;<br>
+}<br>
+}<br>
+    <br>
+//Запросы<br>
+private SqlDataAdapter sendQuery(string query)<br>
+{<br>
+return new SqlDataAdapter(query, connection);<br>
+}<br>
+    <br>
+private DataTable fillDtable(string query)<br>
+{<br>
+DataTable dtable = new DataTable();<br>
+sendQuery(query).Fill(dtable);<br>
+return dtable;<br>
+}<br>
+}<br>
+    }</p>
+</div>
+<div class="prec">
+    <img src="./images/ant_1.png" alt="precedent">
+    <img src="./images/ant_2.png" alt="precedent">
+</div>
+</body>
+</html>
