@@ -22,5 +22,295 @@
   <img src="./images/active.png" alt="precedent">
   <img src="./images/merop.png" alt="precedent">
 </div>
+<div class="kode">
+  <p>АВТОРИЗАЦИЯ</p>
+  <p>
+    using System;<br>
+    using System.Collections.Generic;<br>
+    using System.ComponentModel;<br>
+    using System.Data;<br>
+    using System.Data.SqlClient;<br>
+    using System.Drawing;<br>
+    using System.Linq;<br>
+    using System.Reflection.Emit;<br>
+    using System.Text;<br>
+    using System.Threading.Tasks;<br>
+    using System.Windows.Forms;<br>
+    <br>
+    namespace WindowsFormsApp1<br>
+    {<br>
+    public partial class Auth : Form<br>
+    {<br>
+    DataSet ds;<br>
+    SqlDataAdapter adapter;<br>
+    SqlCommandBuilder commandBuilder;<br>
+    <br>
+    private string username;<br>
+    private string password;<br>
+    <br>
+    private User currentUser = new User();<br>
+    <br>
+    bool firstEnter = false;<br>
+    <br>
+    private string moderatorsSource = @"Data Source=.\SQLEXPRESS;Initial Catalog=MODERATORS;Integrated Security=True";<br>
+    private string usersSource = @"Data Source=.\SQLEXPRESS;Initial Catalog=USERS;Integrated Security=True";<br>
+    private string organizatorsSource = @"Data Source=.\SQLEXPRESS;Initial Catalog=ORGANIZATORS;Integrated Security=True";<br>
+    <br>
+    string sql = "SELECT * FROM Users";<br>
+    string sql2 = "SELECT * FROM Moderators";<br>
+    string sql3 = "SELECT * FROM Organizators";<br>
+    <br>
+    public Auth()<br>
+    {<br>
+    InitializeComponent();<br>
+    <br>
+    textBox1.TextChanged += UsernameTextChanged;<br>
+    textBox2.TextChanged += UsernameTextChanged;<br>
+    <br>
+    button1.Click += AuthorizationProccess;<br>
+    }<br>
+    <br>
+    private void AuthorizationProccess(object sender, EventArgs e)<br>
+    {<br>
+    if (firstEnter)<br>
+    {<br>
+    GetAllDataFromSql();<br>
+    }<br>
+    <br>
+    Form form = new Form();<br>
+    form.ShowDialog();<br>
+    <br>
+    <br>
+    //currentUser.FullName = GetFromSql();<br>
+    }<br>
+    <br>
+    <br>
+    //method without sql injections<br>
+    private void GetAllDataFromSql()<br>
+    {<br>
+    using (SqlConnection connection = new SqlConnection(moderatorsSource)) //подключение к БД по адресу<br>
+    {<br><br>
+    connection.Open();<br>
+    var adapter = new SqlDataAdapter(sql, connection); //sql - запрос на получени таблицы участников<br>
+    <br>
+    ds = new DataSet(); //целиком вся таблица участников<br>
+    adapter.Fill(ds); //перенос всей таблицы в поле ds<br>
+    <br>
+    for (int i = 0; i < ds.Tables.Count; i++)<br>
+    {<br>
+    for (int j = 0; j < ds.Tables[i].Rows.Count; <br>
+    {<br>
+    for (int x = 0; x < ds.Tables[i].Rows.Count; x++)<br>
+    {<br>
+    //ds.Tables[i].Rows[x]. work with data in current row<br>
+    }<br>
+    }<br>
+    <br>
+    for (int j = 0; j < ds.Tables[i].Columns.Count; j++)<br>
+    {<br>
+    }<br>
+    }<br>
+    }<br>
+    }<br>
+    <br>
+    <br>
+    private void UsernameTextChanged(object sender, EventArgs e)<br>
+    {<br>
+    username = textBox1.Text;<br>
+    }<br>
+    <br>
+    private void PasswordTextChanged(object sender, EventArgs e)<br>
+    {<br>
+    username = textBox2.Text;<br>
+    }<br>
+    }<br>
+    }<br>
+    <br>
+    <br>
+    public class User<br>
+    {<br>
+    public int ID;<br>
+    public string FullName;<br>
+    public string Password;<br>
+    public Role CurrentRole; //or int currentRole<br>
+    public int Country;<br>
+    public DateTime birthDay; //10.09.2023 10:10:10:10<br>
+    public int phoneNumber;<br>
+    public Unit userDirection;<br>
+    public Event currentEvent;<br>
+    public string photoUrl;<br>
+    }<br>
+    <br>
+    public enum Role<br>
+    {<br>
+    User,<br>
+    Moderator,<br>
+    Organizator<br>
+    }<br>
+    <br>
+    public enum Gender<br>
+    {<br>
+    male,<br>
+    female,<br>
+    none<br>
+    }<br>
+    <br>
+    public enum Unit<br>
+    {<br>
+    IT,<br>
+    BigData,<br>
+    Design,<br>
+    Analytics,<br>
+    InformationalSecurity,<br>
+    Development,<br>
+    StartUp<br>
+    }<br>
+    <br>
+    public enum Event<br>
+    {<br>
+    ITInfrastructure = Unit.IT,<br>
+    BuisnessIT = Unit.IT,<br>
+    AppDev = Unit.Development,<br>
+    Startups = Unit.StartUp,<br>
+    IB = Unit.InformationalSecurity,<br>
+    }<br>
+  </p>
+  <p>РЕГИСТРАЦИЯ</p>>
+  <p>
+    using System;<br>
+    using System.Collections.Generic;<br>
+    using System.ComponentModel;<br>
+    using System.Data;<br>
+    using System.Drawing;<br>
+    using System.Linq;<br>
+    using System.Text;<br>
+    using System.Threading.Tasks;<br>
+    using System.Windows.Forms;<br>
+    <br>
+    namespace WindowsFormsApp1<br>
+    {<br>
+    public partial class Registration : Form<br>
+    {<br>
+    User newUser = new User();<br>
+    <br>
+    DataSet dataSet;<br>
+    <br>
+    Role currentRole;<br>
+    <br>
+    public Registration()<br>
+    {<br>
+    InitializeComponent();<br>
+    <br>
+    ID.ReadOnly = true;<br>
+    <br>
+    //ID.Text = ds.Tables[i].Rows.Count.ToString() + 1;<br>
+    }<br>
+    <br>
+    private void textBox1_TextChanged(object sender, EventArgs e)<br>
+    {<br>
+    newUser.ID = ID.Text; //textBox1.Text<br>
+    <br>
+    var string1 = textBox1.Text;<br>
+    <br>
+    if (string1.Contains(["@", "$", "!", "_"]))<br>
+    {<br>
+    <br>
+    if (string1.Contains(["1", "2", ...]))<br>
+    {<br>
+    <br>
+    foreach (var item in string1)<br>
+    {<br>
+    if (Char.IsUpper(item)) return true;<br>
+    }<br>
+    }<br>
+    }<br>
+    else<br>
+    {<br>
+    throw<br>
+    }
+    <br>
+    <br>
+    }
+    <br>
+    private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)<br>
+    {<br>
+    currentRole = WindowsFormsApp1.Role.User;<br>
+    }<br>
+    <br>
+    private void button1_Click(object sender, EventArgs e)<br>
+    {<br>
+    switch (currentRole)<br>
+    {<br>
+    case WindowsFormsApp1.Role.User:<br>
+    this.studentsTableAdapter.Update(this.computer_shopDataSet.Users);<br>
+    this.computer_shopDataSet.AcceptChanges();<br>
+    break;<br>
+    case WindowsFormsApp1.Role.Moderator:<br>
+    <br>
+    this.studentsTableAdapter.Update(this.computer_shopDataSet.Moderator);<br>
+    this.computer_shopDataSet.AcceptChanges();<br>
+    break;<br>
+    case WindowsFormsApp1.Role.Organizator:<br>
+    this.studentsTableAdapter.Update(this.computer_shopDataSet.Organizator);<br>
+    this.computer_shopDataSet.AcceptChanges();<br>
+    break;<br>
+    }<br>
+    }<br>
+    }<br>
+    <br><
+    public class User<br>
+    {<br>
+    public string ID;<br>
+    public string FullName;<br>
+    public string Password;<br>
+    public Role CurrentRole; //or int currentRole<br>
+    public int Country;<br>
+    public DateTime birthDay; //10.09.2023 10:10:10:10<br>
+    public int phoneNumber;<br>
+    public Unit userDirection;<br>
+    public Event currentEvent;<br>
+    public string photoUrl;<br>
+    }<br>
+    <br>
+    public enum Role<br>
+    {<br>
+    User,<br>
+    Moderator,<br>
+    Organizator<br>
+    }<br>
+    <br>
+    public enum Gender<br>
+    {<br>
+    male,<br>
+    female,<br>
+    none<br>
+    }<br>
+    <br>
+    public enum Unit<br>
+    {<br>
+    IT,<br>
+    BigData,<br>
+    Design,<br>
+    Analytics,<br>
+    InformationalSecurity,<br>
+    Development,<br>
+    StartUp<br>
+    }<br>
+    <br>
+    public enum Event<br>
+    {<br>
+    ITInfrastructure = Unit.IT,<br>
+    BuisnessIT = Unit.IT,<br>
+    AppDev = Unit.Development,<br>
+    Startups = Unit.StartUp,<br>
+    IB = Unit.InformationalSecurity,<br>
+    }<br>
+    <br>
+    }<br>
+  </p>>
+  <div>
+    <p>ПОМОГАТОР</p>
+    <p>https://docs.google.com/document/d/1dRnbwSSaOi9OLIrHVPxjoxQKs9kCo0XMflRH5z2miv8/edit?usp=sharing</p>
+  </div>
 </body>
 </html>
